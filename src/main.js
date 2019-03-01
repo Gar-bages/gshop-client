@@ -1,13 +1,25 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+
 import Vue from 'vue'
 import App from './App'
+import router from './router/index'
+import store from './store'
+import Header from './components/Header/Header.vue'
+import Star from './components/Star/Star.vue'
+import 'static/css/reset.css'
+import './mock/mockServer' //mockServer.js 会被打包执行一次
+import CartControl from './components/CartControl/CartControl.vue'
 
-Vue.config.productionTip = false
+Vue.component('Header',Header)
+Vue.component('Star',Star)
+Vue.component('CartControl',CartControl)
 
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
-  components: { App },
-  template: '<App/>'
+  // components: {
+  //   App
+  // },
+  // template: '<App/>',
+  render: h => h(App), //返回值 <App/> 将渲染到el中
+  router,
+  store
 })
