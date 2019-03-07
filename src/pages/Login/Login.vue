@@ -140,6 +140,17 @@
       updateCaptcha () {
         this.$refs.captcha.src = 'http://localhost:5000/captcha?time=' + Date.now()
       }
+    },
+    beforeRouteEnter (to,from,next) {
+      next(com => {
+        //如果已经登录 不用变化
+        if(com.$store.state.user.user._id) {
+          next('./profile')
+        }else {
+          //否则跳到登录页面
+          next()
+        }
+      })
     }
   }
 </script>

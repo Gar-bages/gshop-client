@@ -91,8 +91,15 @@
           </div>
         </a>
       </section>
-      <section class="login_submit" v-show="user._id">
-        <button @click="logout">退出登录</button>
+      <section class="profile_my_order border-1px" v-show="user._id">
+        <mt-button type="danger" @click="logout" style="width: 100%">退出登录</mt-button>
+      </section>
+      <section class="profile_my_order border-1px">
+        <router-link to="/a">AAA</router-link>
+        &nbsp;&nbsp;
+        <router-link to="/b">BBB</router-link>
+        &nbsp;&nbsp;
+        <router-link to="/login">去登陆</router-link>
       </section>
     </section>
   </div>
@@ -100,6 +107,7 @@
 
 <script>
   import {mapState} from 'vuex'
+  import {MessageBox} from 'mint-ui'
   export default {
     computed: {
       ...mapState({
@@ -108,9 +116,14 @@
     },
     methods: {
       logout () {
-        if(confirm('确定退出吗？')) {
+        MessageBox.confirm('确定退出吗？').then(() => {
           this.$store.dispatch('logout')
-        }
+        }).catch(() => {
+          console.log('取消');
+        });
+        // if(confirm('确定退出吗？')) {
+        //   this.$store.dispatch('logout')
+        // }
       }
     }
   }
@@ -248,16 +261,4 @@
             .icon-jiantou1
               color #bbb
               font-size 10px
-    .login_submit
-      display block
-      width 100%
-      height 42px
-      margin-top 30px
-      border-radius 4px
-      background #4cd96f
-      color #fff
-      text-align center
-      font-size 16px
-      line-height 42px
-      border 0
 </style>

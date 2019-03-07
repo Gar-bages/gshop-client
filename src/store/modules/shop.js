@@ -62,11 +62,13 @@ const actions = {
     }
   },
   //异步获取ratings
-  async getShopRatings ({commit}){
+  async getShopRatings ({commit},callback){
     const result = await reqRatings()
     if(result.code===0) {
       const ratings = result.data
       commit(RECEIVE_RATINGS,ratings)
+      //更新完数据状态立即调用
+      typeof callback==='function' && callback()
     }
   },
   //异步获取info
@@ -101,6 +103,14 @@ const getters = {
     //遍历购物车里的所有食物的价格进行累加
     return state.cartFoods.reduce((prePrice,item) => prePrice + item.count*item.price,0)
   },
+  //评论的总数量
+  totalRatingCount (state) {
+    return state.ratings.length
+  },
+  //评论中推荐评论的数量
+  totalUpRatingCount (state) {
+    return state.ratings.reduce((pre,rating) => pre + (rating.rateType===0 ? 1 : 0),0)
+  }
 }
 
 export default {
